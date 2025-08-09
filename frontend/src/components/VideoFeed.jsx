@@ -7,6 +7,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
+  const [controlsTimer, setControlsTimer] = useState(null);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             setIsPlaying(false);
           });
         }
-      }, 500);
+      }, 100);
       return () => clearTimeout(timer);
     } else if (videoRef.current) {
       setIsPlaying(false);
@@ -46,23 +47,23 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
     }
   };
 
+  const showControlsTemporarily = () => {
+    setShowControls(true);
+    if (controlsTimer) clearTimeout(controlsTimer);
+    const timer = setTimeout(() => setShowControls(false), 3000);
+    setControlsTimer(timer);
+  };
+
   return (
     <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden">
-      {/* Video Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${video.thumbnail})` }}
-      >
-        <div className="absolute inset-0 bg-black/20"></div>
-      </div>
-
-      {/* Mock Video Element */}
+      {/* Auto-playing Video (No Thumbnail) */}
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover opacity-0"
+        className="absolute inset-0 w-full h-full object-cover"
         muted={isMuted}
         loop
         playsInline
+        autoPlay={isActive}
         poster={video.thumbnail}
       >
         <source src={video.videoUrl} type="video/mp4" />
@@ -71,8 +72,15 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
       {/* Minimal UI Overlays */}
       <div 
         className="absolute inset-0 flex flex-col justify-between p-3 z-10 pb-28"
-        onTouchStart={() => setShowControls(!showControls)}
-        onClick={togglePlay}
+        onTouchStart={(e) => {
+          e.stopPropagation();
+          showControlsTemporarily();
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          togglePlay();
+          showControlsTemporarily();
+        }}
       >
         {/* Top Section - Minimal Category & Sound */}
         <div className="flex justify-between items-start">
@@ -80,8 +88,8 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             {video.category}
           </div>
           
-          {/* Sound Control - Only show when controls visible */}
-          {(showControls || !isActive) && (
+          {/* Sound Control - Show when tapped */}
+          {showControls && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -94,11 +102,14 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
           )}
         </div>
 
-        {/* Center Play Button - Minimal */}
+        {/* Center Play Button - Only when paused */}
         {!isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center">
             <button
-              onClick={togglePlay}
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay();
+              }}
               className="bg-white/20 backdrop-blur-sm text-white p-6 border-2 border-white/50 rounded-full hover:bg-white/30 transition-all"
             >
               <Play className="h-8 w-8 ml-1" />
@@ -161,51 +172,6 @@ const VideoFeed = ({ onContactClick }) => {
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Handle touch events for swipe navigation
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientY);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientY);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isUpSwipe = distance > 50;
-    const isDownSwipe = distance < -50;
-
-    if (isUpSwipe && currentVideoIndex < videoFeedData.length - 1) {
-      navigateToVideo(currentVideoIndex + 1);
-    }
-    if (isDownSwipe && currentVideoIndex > 0) {
-      navigateToVideo(currentVideoIndex - 1);
-    }
-  };
-
-  // Swipe right to go back to main page
-  const onTouchStartHorizontal = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMoveHorizontal = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEndHorizontal = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isRightSwipe = distance < -50;
-
-    if (isRightSwipe) {
-      navigate('/');
-    }
-  };
-
   const navigateToVideo = (index) => {
     if (isScrolling) return;
     
@@ -221,6 +187,57 @@ const VideoFeed = ({ onContactClick }) => {
     }
     
     setTimeout(() => setIsScrolling(false), 800);
+  };
+
+  // Handle vertical touch events for video navigation
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+    
+    const isUpSwipe = distance > minSwipeDistance;
+    const isDownSwipe = distance < -minSwipeDistance;
+
+    if (isUpSwipe && currentVideoIndex < videoFeedData.length - 1) {
+      navigateToVideo(currentVideoIndex + 1);
+    }
+    if (isDownSwipe && currentVideoIndex > 0) {
+      navigateToVideo(currentVideoIndex - 1);
+    }
+  };
+
+  // Handle horizontal swipe to go back to main page
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleHorizontalTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleHorizontalTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleHorizontalTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    
+    const distance = touchStartX - touchEndX;
+    const isRightSwipe = distance < -100; // Increased threshold for horizontal
+
+    if (isRightSwipe) {
+      navigate('/');
+    }
   };
 
   useEffect(() => {
@@ -262,18 +279,21 @@ const VideoFeed = ({ onContactClick }) => {
       ref={containerRef}
       className="h-screen overflow-hidden pb-16"
       onTouchStart={(e) => {
-        onTouchStart(e);
-        onTouchStartHorizontal(e);
+        handleTouchStart(e);
+        handleHorizontalTouchStart(e);
       }}
       onTouchMove={(e) => {
-        onTouchMove(e);
-        onTouchMoveHorizontal(e);
+        handleTouchMove(e);
+        handleHorizontalTouchMove(e);
       }}
       onTouchEnd={(e) => {
-        onTouchEnd();
-        onTouchEndHorizontal();
+        handleTouchEnd();
+        handleHorizontalTouchEnd();
       }}
-      style={{ scrollSnapType: 'y mandatory' }}
+      style={{ 
+        scrollSnapType: 'y mandatory',
+        touchAction: 'pan-y' // Enable vertical panning
+      }}
     >
       {videoFeedData.map((video, index) => (
         <div key={video.id} style={{ scrollSnapAlign: 'start' }}>

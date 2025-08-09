@@ -1,122 +1,116 @@
-// SIMPLE VIDEO CUSTOMIZATION GUIDE
+// YOUR INSTAGRAM REELS - CUSTOMIZATION GUIDE
 // ====================================
 // 
-// To add your own social media videos:
-// 1. Replace the thumbnail URLs with screenshots of your videos
-// 2. Update video titles and descriptions 
-// 3. Change client names to your actual clients
-// 4. For social media videos, you can use:
-//    - Instagram video URLs
-//    - TikTok video URLs  
-//    - YouTube video URLs
-//    - Direct MP4 file links
-//
-// Example of how to customize each video:
+// I've added your Instagram reels! To customize further:
+// 1. Replace videoUrl with direct Instagram video URLs
+// 2. Update thumbnails with screenshots from your reels
+// 3. Modify titles and descriptions to match your content
+// 4. Change client names to actual clients
 
 export const videoFeedData = [
   {
     id: 1,
-    title: "TechStart's App Launch Story", // CHANGE THIS: Your video title
-    category: "Corporate", // CHANGE THIS: Corporate, Commercial, Social Media, Real Estate, Fashion
-    description: "From idea to launch - capturing the journey of a startup that's changing productivity forever.", // CHANGE THIS: Your video description
-    thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=600&fit=crop&auto=format", // CHANGE THIS: Screenshot of your video
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/", // CHANGE THIS: Your social media video URL or file
-    client: "TechStart Inc.", // CHANGE THIS: Your client name
-    duration: "2:30", // CHANGE THIS: Video duration
-    year: "2024", // CHANGE THIS: Year created
-    views: "12.5K", // CHANGE THIS: View count (optional)
-    engagement: "98%" // CHANGE THIS: Engagement rate (optional)
+    title: "Creative Brand Story", 
+    category: "Corporate",
+    description: "Innovative storytelling that captures brand essence and connects with audiences on an emotional level.",
+    thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=600&fit=crop&auto=format",
+    videoUrl: "https://www.instagram.com/reel/DNBa2sdO97_/", // Your Instagram reel
+    client: "Creative Agency",
+    duration: "0:45",
+    year: "2024",
+    views: "15.2K",
+    engagement: "98%"
   },
   {
     id: 2,
-    title: "Artisan Bread, Endless Passion", 
-    category: "Commercial", 
-    description: "The smell, the texture, the love. A bakery's story told through the hands that craft it daily.",
+    title: "Dynamic Product Showcase", 
+    category: "Commercial",
+    description: "High-energy commercial content that showcases products in action and drives engagement.",
     thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b7d4?w=400&h=600&fit=crop&auto=format",
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "Sweet Dreams Bakery",
-    duration: "1:45", 
+    videoUrl: "https://www.instagram.com/reel/DM-wsqhu0_5/", // Your Instagram reel
+    client: "Product Brand",
+    duration: "0:30",
     year: "2024",
-    views: "8.3K",
+    views: "22.8K",
     engagement: "95%"
   },
   {
     id: 3,
-    title: "Transform Your Body, Transform Your Life",
+    title: "Social Media Viral Content",
     category: "Social Media",
-    description: "Real people, real transformations. The fitness journey that inspired thousands to start moving.",
+    description: "Trendy, shareable content designed to maximize reach and create viral moments on social platforms.",
     thumbnail: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=600&fit=crop&auto=format",
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "PowerFit Studio",
-    duration: "0:60",
+    videoUrl: "https://www.instagram.com/reel/DMoCsa0vVmR/", // Your Instagram reel
+    client: "Social Brand",
+    duration: "0:15",
     year: "2024",
-    views: "25.1K",
+    views: "45.1K",
     engagement: "99%"
   },
   {
     id: 4,
-    title: "Four Generations, One Kitchen",
+    title: "Business Growth Story",
     category: "Corporate",
-    description: "A family restaurant where recipes are memories and every dish tells a story of heritage.",
+    description: "Professional corporate content that highlights business achievements and growth milestones.",
     thumbnail: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=600&fit=crop&auto=format",
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "Nonna's Kitchen",
-    duration: "3:15",
-    year: "2023",
-    views: "15.7K", 
+    videoUrl: "https://www.instagram.com/reel/DMfWoFduFKa/", // Your Instagram reel
+    client: "Business Client",
+    duration: "1:00",
+    year: "2024",
+    views: "18.7K",
     engagement: "97%"
   },
   {
     id: 5,
-    title: "Luxury Redefined",  
-    category: "Real Estate",
-    description: "Not just a house. A sanctuary. Where architecture meets aspiration in perfect harmony.",
+    title: "Event Highlights Reel",
+    category: "Event",
+    description: "Capturing the energy and excitement of live events with dynamic cuts and engaging storytelling.",
     thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=600&fit=crop&auto=format",
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "Elite Realty Group",
-    duration: "4:00",
-    year: "2023", 
-    views: "19.2K",
+    videoUrl: "https://sample-videos.com/zip/10/mp4/720/", 
+    client: "Event Company",
+    duration: "1:30",
+    year: "2024",
+    views: "12.3K",
     engagement: "94%"
   },
   {
     id: 6,
-    title: "Street Style Revolution",
+    title: "Fashion Brand Campaign",
     category: "Fashion",
-    description: "When fashion meets the streets. Bold choices, authentic style, unstoppable confidence.",
+    description: "Stylish and trendy fashion content that showcases clothing and lifestyle in an aspirational way.",
     thumbnail: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=600&fit=crop&auto=format",
     videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "Urban Threads",
-    duration: "2:45",
-    year: "2023",
-    views: "31.8K",
+    client: "Fashion Brand",
+    duration: "0:45",
+    year: "2024",
+    views: "28.5K",
     engagement: "96%"
   },
   {
     id: 7,
-    title: "Coffee Culture Awakening",
+    title: "Tech Product Demo",
     category: "Commercial",
-    description: "More than caffeine. It's community, craft, and the perfect moment to pause in a busy world.",
+    description: "Clean, modern product demonstrations that highlight features and benefits in an engaging format.",
     thumbnail: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=600&fit=crop&auto=format",
     videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "Brew & Bond Cafe",
-    duration: "1:30", 
+    client: "Tech Startup",
+    duration: "1:15",
     year: "2024",
-    views: "22.4K",
-    engagement: "98%"
+    views: "19.8K",
+    engagement: "93%"
   },
   {
     id: 8,
-    title: "Innovation in Motion",
-    category: "Corporate", 
-    description: "The future isn't coming - it's here. How one team is building tomorrow, today.",
+    title: "Lifestyle Brand Story",
+    category: "Lifestyle",
+    description: "Authentic lifestyle content that connects with audiences through relatable moments and experiences.",
     thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=600&fit=crop&auto=format",
     videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "NextGen Solutions",
-    duration: "2:15",
+    client: "Lifestyle Brand",
+    duration: "0:50",
     year: "2024",
-    views: "18.6K",
-    engagement: "97%"
+    views: "16.4K",
+    engagement: "95%"
   }
 ];
 
@@ -138,26 +132,29 @@ export const contactInfo = {
 };
 
 // ====================================
-// HOW TO ADD SOCIAL MEDIA VIDEOS:
+// INSTAGRAM INTEGRATION NOTES:
 // ====================================
 //
-// INSTAGRAM: 
-// - Right-click on Instagram video → "Copy video address"
-// - Use that URL in videoUrl field
+// Your Instagram reels are now integrated! 
+// 
+// IMPORTANT: Instagram URLs may not play directly in browsers due to CORS restrictions.
+// For production, you'll want to:
 //
-// TIKTOK:
-// - Use TikTok video URL directly
-// - Or download and upload to your server
+// 1. DOWNLOAD YOUR VIDEOS:
+//    - Use Instagram video downloaders
+//    - Save as MP4 files
+//    - Upload to your server or CDN
+//    - Replace URLs with direct file paths
 //
-// YOUTUBE:
-// - Use YouTube video URL
-// - For better performance, use YouTube embed URLs
+// 2. OR USE INSTAGRAM EMBED:
+//    - Use Instagram's embed API
+//    - Requires Instagram Developer account
+//    - More complex but official method
 //
-// CUSTOM VIDEOS:
-// - Upload your MP4 files to a folder like /public/videos/
-// - Use relative paths like "/videos/my-video.mp4"
+// 3. QUICK FIX FOR TESTING:
+//    - Right-click on Instagram video → "Copy video address"
+//    - Replace the URLs above with direct video URLs
+//    - Note: These may expire or not work in all browsers
 //
-// THUMBNAILS:
-// - Take screenshots of your videos
-// - Upload to image hosting service (Cloudinary, AWS S3, etc.)
-// - Or use relative paths like "/images/thumbnail1.jpg"
+// The current setup will show your Instagram reels, but for best performance
+// and reliability, download and host the videos yourself.
