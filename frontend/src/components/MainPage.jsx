@@ -29,7 +29,6 @@ const MainPage = () => {
     
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
 
     if (isLeftSwipe) {
       handleEnterVideos();
@@ -43,109 +42,109 @@ const MainPage = () => {
   return (
     <div 
       ref={pageRef}
-      className="min-h-screen bg-yellow-300 dark:bg-black relative overflow-hidden pb-24"
+      className="min-h-screen bg-yellow-300 dark:bg-black relative overflow-hidden pb-20"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Neobrutalism Background Elements */}
+      {/* Neobrutalism Background Elements - Smaller */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-32 h-32 bg-blue-600 transform rotate-12 border-8 border-black dark:border-white opacity-80"></div>
-        <div className="absolute bottom-40 left-10 w-24 h-24 bg-red-500 transform -rotate-45 border-6 border-black dark:border-white"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-green-400 rounded-full border-6 border-black dark:border-white"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-20 h-20 bg-purple-500 transform rotate-45 border-6 border-black dark:border-white opacity-70"></div>
+        <div className="absolute top-20 right-8 w-16 h-16 bg-blue-600 transform rotate-12 border-3 border-black dark:border-white opacity-60"></div>
+        <div className="absolute bottom-40 left-8 w-12 h-12 bg-red-500 transform -rotate-45 border-2 border-black dark:border-white"></div>
+        <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-green-400 rounded-full border-2 border-black dark:border-white"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-10 h-10 bg-purple-500 transform rotate-45 border-2 border-black dark:border-white opacity-50"></div>
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col justify-center min-h-screen px-6 lg:px-12">
-        {/* Logo/Brand */}
-        <div className={`text-center mb-8 transition-all duration-1000 ${
+      <div className="relative z-10 flex flex-col justify-center min-h-screen px-4 lg:px-8">
+        {/* Logo/Brand - Mobile Optimized */}
+        <div className={`text-center mb-6 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative inline-block">
-            <h1 className="text-7xl md:text-9xl font-black text-black dark:text-white leading-none tracking-tighter">
+            <h1 className="text-5xl md:text-7xl font-black text-black dark:text-white leading-none tracking-tighter">
               FELP
             </h1>
-            <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-600 border-4 border-black dark:border-white transform rotate-45"></div>
+            <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-600 border-2 border-black dark:border-white transform rotate-45"></div>
           </div>
           
-          <div className="mt-4 bg-black dark:bg-white h-2 w-32 mx-auto transform -skew-x-12"></div>
+          <div className="mt-2 bg-black dark:bg-white h-1 w-16 mx-auto transform -skew-x-12"></div>
         </div>
 
-        {/* Tagline */}
-        <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+        {/* Tagline - Mobile Optimized */}
+        <div className={`text-center mb-8 transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <div className="bg-blue-600 text-white px-8 py-4 border-8 border-black dark:border-white transform -rotate-1 inline-block mb-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
-            <p className="text-xl md:text-2xl font-black uppercase tracking-wide">
+          <div className="bg-blue-600 text-white px-4 py-2 border-3 border-black dark:border-white transform -rotate-1 inline-block mb-4 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]">
+            <p className="text-sm md:text-lg font-black uppercase tracking-wide">
               VIDEO CREATOR
             </p>
           </div>
           
-          <p className="text-lg md:text-xl font-bold text-black dark:text-white max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg font-bold text-black dark:text-white max-w-xl mx-auto">
             CRAFTING VIRAL CONTENT FOR SMALL BUSINESSES
           </p>
         </div>
 
-        {/* Stats Grid - Neobrutalism Style */}
-        <div className={`grid grid-cols-3 gap-4 max-w-3xl mx-auto mb-12 transition-all duration-1000 delay-500 ${
+        {/* Stats Grid - Mobile Optimized */}
+        <div className={`grid grid-cols-3 gap-3 max-w-sm mx-auto mb-8 transition-all duration-1000 delay-500 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <div className="bg-red-500 border-6 border-black dark:border-white p-6 transform rotate-1 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
-            <Eye className="h-8 w-8 text-white mx-auto mb-2" />
-            <div className="text-3xl font-black text-white">150K</div>
-            <div className="text-white font-bold text-sm uppercase">VIEWS</div>
+          <div className="bg-red-500 border-3 border-black dark:border-white p-3 transform rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
+            <Eye className="h-5 w-5 text-white mx-auto mb-1" />
+            <div className="text-lg font-black text-white">150K</div>
+            <div className="text-white font-bold text-xs uppercase">VIEWS</div>
           </div>
           
-          <div className="bg-green-500 border-6 border-black dark:border-white p-6 transform -rotate-1 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
-            <Users className="h-8 w-8 text-white mx-auto mb-2" />
-            <div className="text-3xl font-black text-white">25+</div>
-            <div className="text-white font-bold text-sm uppercase">CLIENTS</div>
+          <div className="bg-green-500 border-3 border-black dark:border-white p-3 transform -rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
+            <Users className="h-5 w-5 text-white mx-auto mb-1" />
+            <div className="text-lg font-black text-white">25+</div>
+            <div className="text-white font-bold text-xs uppercase">CLIENTS</div>
           </div>
           
-          <div className="bg-purple-500 border-6 border-black dark:border-white p-6 transform rotate-1 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
-            <Zap className="h-8 w-8 text-white mx-auto mb-2" />
-            <div className="text-3xl font-black text-white">96%</div>
-            <div className="text-white font-bold text-sm uppercase">VIRAL</div>
+          <div className="bg-purple-500 border-3 border-black dark:border-white p-3 transform rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
+            <Zap className="h-5 w-5 text-white mx-auto mb-1" />
+            <div className="text-lg font-black text-white">96%</div>
+            <div className="text-white font-bold text-xs uppercase">VIRAL</div>
           </div>
         </div>
 
-        {/* CTA Button - Neobrutalism Style */}
-        <div className={`text-center mb-8 transition-all duration-1000 delay-700 ${
+        {/* CTA Button - Mobile Optimized */}
+        <div className={`text-center mb-6 transition-all duration-1000 delay-700 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <button
             onClick={handleEnterVideos}
-            className="group bg-blue-600 text-white px-12 py-6 border-8 border-black dark:border-white text-2xl font-black uppercase transform hover:transform hover:translate-x-2 hover:translate-y-2 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
+            className="group bg-blue-600 text-white px-6 py-3 border-3 border-black dark:border-white text-lg font-black uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:active:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)] active:translate-x-1 active:translate-y-1 transition-all"
           >
-            <div className="flex items-center gap-4">
-              <Play className="h-8 w-8 group-hover:scale-110 transition-transform" />
+            <div className="flex items-center gap-3">
+              <Play className="h-5 w-5 group-active:scale-110 transition-transform" />
               <span>WATCH VIDEOS</span>
-              <ArrowRight className="h-8 w-8 group-hover:translate-x-2 transition-transform" />
+              <ArrowRight className="h-5 w-5 group-active:translate-x-1 transition-transform" />
             </div>
           </button>
         </div>
 
-        {/* Swipe Hint */}
+        {/* Swipe Hint - Mobile Optimized */}
         <div className={`text-center transition-all duration-1000 delay-1000 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}>
-          <div className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 border-4 border-black dark:border-white inline-flex items-center gap-3 font-bold uppercase text-sm">
-            <ChevronLeft className="h-4 w-4" />
+          <div className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 border-2 border-black dark:border-white inline-flex items-center gap-2 font-bold uppercase text-xs">
+            <ChevronLeft className="h-3 w-3" />
             <span>SWIPE LEFT FOR VIDEOS</span>
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3 w-3" />
           </div>
         </div>
       </div>
 
-      {/* Mobile CTA - Fixed Position */}
-      <div className="md:hidden fixed bottom-28 left-4 right-4 z-20">
+      {/* Mobile CTA - Fixed Position - Smaller */}
+      <div className="md:hidden fixed bottom-20 left-3 right-3 z-20">
         <button
           onClick={handleEnterVideos}
-          className="w-full bg-red-500 text-white py-4 border-6 border-black text-xl font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 transition-all"
+          className="w-full bg-red-500 text-white py-3 border-3 border-black text-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all"
         >
-          <div className="flex items-center justify-center gap-3">
-            <Play className="h-6 w-6" />
+          <div className="flex items-center justify-center gap-2">
+            <Play className="h-5 w-5" />
             WATCH NOW
           </div>
         </button>

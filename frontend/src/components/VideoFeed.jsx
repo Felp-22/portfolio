@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Play, Pause, Volume2, VolumeX, MessageCircle, ChevronUp, ChevronDown } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, MessageCircle } from "lucide-react";
 import { videoFeedData } from "../data/mock";
 
 const VideoCard = ({ video, isActive, onContactClick }) => {
@@ -47,13 +47,13 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
   };
 
   return (
-    <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden border-8 border-black dark:border-white">
+    <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden">
       {/* Video Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${video.thumbnail})` }}
       >
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       {/* Mock Video Element */}
@@ -68,87 +68,84 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         <source src={video.videoUrl} type="video/mp4" />
       </video>
 
-      {/* Neobrutalism UI Overlays */}
+      {/* Minimal UI Overlays */}
       <div 
-        className="absolute inset-0 flex flex-col justify-between p-4 z-10"
+        className="absolute inset-0 flex flex-col justify-between p-3 z-10 pb-28"
         onTouchStart={() => setShowControls(!showControls)}
         onClick={togglePlay}
       >
-        {/* Top Section - Category & Controls */}
+        {/* Top Section - Minimal Category & Sound */}
         <div className="flex justify-between items-start">
-          <div className="bg-blue-600 text-white px-4 py-2 border-4 border-white font-black uppercase text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
+          <div className="bg-blue-600 text-white px-2 py-1 text-xs font-bold uppercase border-2 border-white">
             {video.category}
           </div>
           
-          {/* Video Controls */}
-          <div className={`flex gap-2 transition-opacity duration-300 ${showControls || !isActive ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Sound Control - Only show when controls visible */}
+          {(showControls || !isActive) && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 toggleMute();
               }}
-              className="bg-black text-white p-3 border-4 border-white font-bold shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
+              className="bg-black/60 text-white p-2 border-2 border-white/50 backdrop-blur-sm"
             >
-              {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
             </button>
-          </div>
+          )}
         </div>
 
-        {/* Center Play Button - Neobrutalism Style */}
+        {/* Center Play Button - Minimal */}
         {!isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={togglePlay}
-              className="bg-red-500 text-white p-8 border-8 border-white font-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1 transition-all"
+              className="bg-white/20 backdrop-blur-sm text-white p-6 border-2 border-white/50 rounded-full hover:bg-white/30 transition-all"
             >
-              <Play className="h-16 w-16 ml-2" />
+              <Play className="h-8 w-8 ml-1" />
             </button>
           </div>
         )}
 
-        {/* Bottom Section - Video Info & Action */}
-        <div className="space-y-4 pb-24">
-          {/* Duration Badge */}
-          <div className="flex items-center gap-2">
-            <div className="bg-yellow-400 text-black px-3 py-1 border-3 border-black font-black text-sm uppercase">
+        {/* Bottom Section - Minimal Info */}
+        <div className="space-y-2">
+          {/* Compact Info */}
+          <div className="flex items-center gap-2 text-sm">
+            <span className="bg-yellow-400 text-black px-2 py-1 text-xs font-bold border border-black">
               {video.duration}
-            </div>
-            <div className="bg-green-500 text-white px-3 py-1 border-3 border-white font-black text-sm uppercase">
-              {video.year}
-            </div>
+            </span>
+            <span className="text-white/80 text-xs font-bold">
+              {video.client} • {video.year}
+            </span>
           </div>
           
-          {/* Title - Neobrutalism Typography */}
-          <div className="bg-white text-black p-4 border-6 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform -rotate-1 max-w-xs">
-            <h3 className="font-black text-xl leading-tight uppercase mb-2">
+          {/* Title - Minimal */}
+          <div className="bg-white/90 backdrop-blur-sm text-black p-3 border-2 border-black max-w-xs">
+            <h3 className="font-bold text-sm leading-tight mb-1">
               {video.title}
             </h3>
-            <p className="font-bold text-sm">
-              {video.description.substring(0, 80)}...
+            <p className="text-xs text-gray-700">
+              {video.description.substring(0, 60)}...
             </p>
-            <div className="text-xs font-black uppercase mt-2 text-gray-600">
-              {video.client}
-            </div>
           </div>
 
-          {/* Contact CTA - Neobrutalism Button */}
+          {/* Contact CTA - Smaller */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onContactClick(video);
             }}
-            className="bg-purple-600 text-white px-8 py-4 border-6 border-white font-black uppercase text-lg flex items-center gap-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1 transition-all"
+            className="bg-purple-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all"
           >
-            <MessageCircle className="h-6 w-6" />
-            <span>LET'S WORK!</span>
+            <MessageCircle className="h-4 w-4" />
+            <span>WORK WITH ME</span>
           </button>
         </div>
       </div>
 
-      {/* Progress Bar - Neobrutalism Style */}
-      <div className="absolute bottom-0 left-0 right-0 h-3 bg-gray-800 border-t-4 border-white">
+      {/* Minimal Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
         <div 
-          className="h-full bg-red-500 transition-all duration-300 border-r-4 border-black"
+          className="h-full bg-blue-600 transition-all duration-300"
           style={{ width: isActive ? '100%' : '0%' }}
         ></div>
       </div>
@@ -263,7 +260,7 @@ const VideoFeed = ({ onContactClick }) => {
   return (
     <div 
       ref={containerRef}
-      className="h-screen overflow-hidden pb-24"
+      className="h-screen overflow-hidden pb-16"
       onTouchStart={(e) => {
         onTouchStart(e);
         onTouchStartHorizontal(e);
@@ -288,32 +285,9 @@ const VideoFeed = ({ onContactClick }) => {
         </div>
       ))}
 
-      {/* Navigation Hints - Neobrutalism Style */}
-      <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4">
-        <button
-          onClick={() => currentVideoIndex > 0 && navigateToVideo(currentVideoIndex - 1)}
-          className={`bg-yellow-400 border-4 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
-            currentVideoIndex === 0 ? 'opacity-30' : 'hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1'
-          }`}
-          disabled={currentVideoIndex === 0}
-        >
-          <ChevronUp className="h-6 w-6 text-black" />
-        </button>
-        
-        <button
-          onClick={() => currentVideoIndex < videoFeedData.length - 1 && navigateToVideo(currentVideoIndex + 1)}
-          className={`bg-yellow-400 border-4 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
-            currentVideoIndex === videoFeedData.length - 1 ? 'opacity-30' : 'hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1'
-          }`}
-          disabled={currentVideoIndex === videoFeedData.length - 1}
-        >
-          <ChevronDown className="h-6 w-6 text-black" />
-        </button>
-      </div>
-
-      {/* Video Counter */}
-      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-20">
-        <div className="bg-red-500 text-white px-4 py-2 border-4 border-white font-black text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-90">
+      {/* Minimal Video Counter - Top Right */}
+      <div className="fixed right-3 top-6 z-20">
+        <div className="bg-black/60 backdrop-blur-sm text-white px-2 py-1 text-xs font-bold border border-white/30">
           {currentVideoIndex + 1}/{videoFeedData.length}
         </div>
       </div>
