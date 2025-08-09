@@ -117,8 +117,8 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
           </div>
         </div>
 
-        {/* Right Side Action Button - TikTok Style */}
-        <div className="absolute bottom-32 right-4 pointer-events-auto">
+        {/* Right Side Action Button - Aligned with Client Name */}
+        <div className="absolute bottom-44 right-4 pointer-events-auto">
           <button
             onClick={handleWhatsAppContact}
             className="bg-green-600 text-white p-4 rounded-full border-3 border-white font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:scale-105 transition-all"
