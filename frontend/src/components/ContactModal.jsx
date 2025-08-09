@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Send, Play } from "lucide-react";
+import { X, Send, Play, Zap } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -27,10 +27,9 @@ const ContactModal = ({ isOpen, onClose, selectedVideo }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock form submission
     setTimeout(() => {
       toast({
-        title: "Message Sent! 🎬",
+        title: "MESSAGE SENT! 🚀",
         description: "I'll get back to you within 24 hours to discuss your project.",
       });
       
@@ -48,153 +47,154 @@ const ContactModal = ({ isOpen, onClose, selectedVideo }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       ></div>
 
-      {/* Modal Content */}
-      <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl border border-gray-200 dark:border-gray-800">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
-        >
-          <X className="h-6 w-6" />
-        </button>
-
+      {/* Modal Content - Neobrutalism Style */}
+      <div className="relative bg-yellow-300 dark:bg-gray-900 border-8 border-black dark:border-white max-w-lg w-full shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Let's Create Together
-          </h2>
+        <div className="flex items-center justify-between p-6 border-b-4 border-black dark:border-white">
+          <div>
+            <h2 className="text-black dark:text-white font-black text-3xl uppercase leading-tight">
+              LET'S CREATE<br/>TOGETHER!
+            </h2>
+          </div>
           
-          {selectedVideo && (
-            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
-              <div className="relative w-16 h-16 rounded-lg overflow-hidden">
-                <img 
-                  src={selectedVideo.thumbnail} 
-                  alt={selectedVideo.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <Play className="h-4 w-4 text-white" />
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white text-sm">
-                  Inspired by: {selectedVideo.title}
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 text-xs">
-                  {selectedVideo.category} • {selectedVideo.client}
-                </p>
-              </div>
-            </div>
-          )}
-          
-          <p className="text-gray-600 dark:text-gray-400 mt-4">
-            Ready to bring your vision to life? Let's discuss your project.
-          </p>
+          <button
+            onClick={onClose}
+            className="bg-red-500 text-white p-3 border-4 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:transform hover:translate-x-1 hover:translate-y-1 transition-all"
+          >
+            <X className="h-6 w-6" />
+          </button>
         </div>
 
+        {/* Selected Video Preview */}
+        {selectedVideo && (
+          <div className="p-6 border-b-4 border-black dark:border-white">
+            <div className="bg-blue-600 text-white p-4 border-4 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transform -rotate-1">
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 border-4 border-white overflow-hidden">
+                  <img 
+                    src={selectedVideo.thumbnail} 
+                    alt={selectedVideo.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <Play className="h-4 w-4 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <p className="font-black text-sm uppercase mb-1">
+                    INSPIRED BY:
+                  </p>
+                  <p className="font-bold text-lg leading-tight">
+                    {selectedVideo.title}
+                  </p>
+                  <p className="text-sm font-bold">
+                    {selectedVideo.category} • {selectedVideo.client}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Name *
+              <label className="block text-black dark:text-white font-black uppercase text-sm mb-2">
+                NAME *
               </label>
               <Input
                 type="text"
-                id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full dark:bg-gray-800 dark:border-gray-700"
-                placeholder="Your name"
+                className="border-4 border-black dark:border-white font-bold bg-white dark:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]"
+                placeholder="YOUR NAME"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email *
+              <label className="block text-black dark:text-white font-black uppercase text-sm mb-2">
+                EMAIL *
               </label>
               <Input
                 type="email"
-                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full dark:bg-gray-800 dark:border-gray-700"
-                placeholder="your@email.com"
+                className="border-4 border-black dark:border-white font-bold bg-white dark:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]"
+                placeholder="YOUR@EMAIL.COM"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Project Type
+            <label className="block text-black dark:text-white font-black uppercase text-sm mb-2">
+              PROJECT TYPE
             </label>
             <select
-              id="projectType"
               name="projectType"
               value={formData.projectType}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+              className="w-full px-4 py-3 border-4 border-black dark:border-white font-bold bg-white dark:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] text-black dark:text-white uppercase"
             >
-              <option value="">Select project type</option>
-              <option value="corporate">Corporate Video</option>
-              <option value="commercial">Commercial</option>
-              <option value="social">Social Media Content</option>
-              <option value="event">Event Coverage</option>
-              <option value="other">Other</option>
+              <option value="">SELECT PROJECT TYPE</option>
+              <option value="corporate">CORPORATE VIDEO</option>
+              <option value="commercial">COMMERCIAL</option>
+              <option value="social">SOCIAL MEDIA CONTENT</option>
+              <option value="event">EVENT COVERAGE</option>
+              <option value="other">OTHER</option>
             </select>
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Tell me about your project *
+            <label className="block text-black dark:text-white font-black uppercase text-sm mb-2">
+              YOUR PROJECT IDEA *
             </label>
             <Textarea
-              id="message"
               name="message"
               value={formData.message}
               onChange={handleInputChange}
               required
               rows={4}
-              className="w-full dark:bg-gray-800 dark:border-gray-700"
-              placeholder="Describe your vision, goals, timeline, and any specific requirements..."
+              className="border-4 border-black dark:border-white font-bold bg-white dark:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]"
+              placeholder="DESCRIBE YOUR VISION, GOALS, TIMELINE, AND ANY SPECIFIC REQUIREMENTS..."
             />
           </div>
 
-          <Button
+          <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium text-lg flex items-center justify-center gap-2 hover:scale-105 transition-all duration-200"
+            className="w-full bg-green-500 text-white py-4 border-6 border-black dark:border-white font-black uppercase text-xl flex items-center justify-center gap-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                Sending...
+                <div className="animate-spin rounded-full h-6 w-6 border-b-4 border-white"></div>
+                SENDING...
               </>
             ) : (
               <>
-                <Send className="h-5 w-5" />
-                Send Message
+                <Zap className="h-6 w-6" />
+                SEND MESSAGE
               </>
             )}
-          </Button>
+          </button>
         </form>
 
-        {/* Quick Contact */}
-        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
-            Prefer to email directly? 
-            <a href="mailto:hello@felp.video" className="text-blue-600 hover:text-blue-700 ml-1">
-              hello@felp.video
+        {/* Footer */}
+        <div className="p-6 border-t-4 border-black dark:border-white bg-black dark:bg-white">
+          <p className="text-white dark:text-black font-bold text-center uppercase text-sm">
+            Direct Email: 
+            <a href="mailto:hello@felp.video" className="text-yellow-400 dark:text-yellow-600 ml-2 underline">
+              HELLO@FELP.VIDEO
             </a>
           </p>
         </div>

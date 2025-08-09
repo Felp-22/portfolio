@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, Pause, Volume2, VolumeX, MessageCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Play, Pause, Volume2, VolumeX, MessageCircle, ChevronUp, ChevronDown } from "lucide-react";
 import { videoFeedData } from "../data/mock";
 
 const VideoCard = ({ video, isActive, onContactClick }) => {
@@ -9,12 +10,17 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (isActive && videoRef.current) {
+    if (isActive) {
       setIsPlaying(true);
-      videoRef.current.play().catch(() => {
-        // Handle autoplay restrictions
-        setIsPlaying(false);
-      });
+      // Auto-play when active
+      const timer = setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play().catch(() => {
+            setIsPlaying(false);
+          });
+        }
+      }, 500);
+      return () => clearTimeout(timer);
     } else if (videoRef.current) {
       setIsPlaying(false);
       videoRef.current.pause();
@@ -41,13 +47,13 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
   };
 
   return (
-    <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden">
+    <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden border-8 border-black dark:border-white">
       {/* Video Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${video.thumbnail})` }}
       >
-        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       {/* Mock Video Element */}
@@ -59,93 +65,90 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         playsInline
         poster={video.thumbnail}
       >
-        {/* Mock video source - in real implementation, this would be actual video files */}
         <source src={video.videoUrl} type="video/mp4" />
       </video>
 
-      {/* Content Overlay */}
+      {/* Neobrutalism UI Overlays */}
       <div 
         className="absolute inset-0 flex flex-col justify-between p-4 z-10"
-        onMouseEnter={() => setShowControls(true)}
-        onMouseLeave={() => setShowControls(false)}
+        onTouchStart={() => setShowControls(!showControls)}
         onClick={togglePlay}
       >
-        {/* Top Section - Branding */}
+        {/* Top Section - Category & Controls */}
         <div className="flex justify-between items-start">
-          <div className={`transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
-            <h1 className="text-white font-bold text-2xl">Felp</h1>
+          <div className="bg-blue-600 text-white px-4 py-2 border-4 border-white font-black uppercase text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
+            {video.category}
           </div>
           
           {/* Video Controls */}
-          <div className={`flex gap-3 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`flex gap-2 transition-opacity duration-300 ${showControls || !isActive ? 'opacity-100' : 'opacity-0'}`}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 toggleMute();
               }}
-              className="bg-black/50 backdrop-blur-sm text-white p-3 rounded-full hover:bg-black/70 transition-all"
+              className="bg-black text-white p-3 border-4 border-white font-bold shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
             >
               {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        {/* Center Play Button */}
+        {/* Center Play Button - Neobrutalism Style */}
         {!isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={togglePlay}
-              className="bg-white/20 backdrop-blur-sm text-white p-8 rounded-full hover:bg-white/30 transition-all transform hover:scale-110"
+              className="bg-red-500 text-white p-8 border-8 border-white font-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1 transition-all"
             >
-              <Play className="h-12 w-12 ml-1" />
+              <Play className="h-16 w-16 ml-2" />
             </button>
           </div>
         )}
 
-        {/* Bottom Section - Video Info & Actions */}
-        <div className="space-y-4">
-          {/* Video Information */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                {video.category}
-              </span>
-              <span className="text-white/80 text-sm">{video.duration}</span>
+        {/* Bottom Section - Video Info & Action */}
+        <div className="space-y-4 pb-24">
+          {/* Duration Badge */}
+          <div className="flex items-center gap-2">
+            <div className="bg-yellow-400 text-black px-3 py-1 border-3 border-black font-black text-sm uppercase">
+              {video.duration}
             </div>
-            
-            <h3 className="text-white font-bold text-xl leading-tight">
+            <div className="bg-green-500 text-white px-3 py-1 border-3 border-white font-black text-sm uppercase">
+              {video.year}
+            </div>
+          </div>
+          
+          {/* Title - Neobrutalism Typography */}
+          <div className="bg-white text-black p-4 border-6 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform -rotate-1 max-w-xs">
+            <h3 className="font-black text-xl leading-tight uppercase mb-2">
               {video.title}
             </h3>
-            
-            <p className="text-white/90 text-sm leading-relaxed max-w-xs">
-              {video.description}
+            <p className="font-bold text-sm">
+              {video.description.substring(0, 80)}...
             </p>
-            
-            <div className="text-white/70 text-xs">
-              {video.client} • {video.year}
+            <div className="text-xs font-black uppercase mt-2 text-gray-600">
+              {video.client}
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onContactClick(video);
-              }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Let's Work Together
-            </button>
-          </div>
+          {/* Contact CTA - Neobrutalism Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onContactClick(video);
+            }}
+            className="bg-purple-600 text-white px-8 py-4 border-6 border-white font-black uppercase text-lg flex items-center gap-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1 transition-all"
+          >
+            <MessageCircle className="h-6 w-6" />
+            <span>LET'S WORK!</span>
+          </button>
         </div>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+      {/* Progress Bar - Neobrutalism Style */}
+      <div className="absolute bottom-0 left-0 right-0 h-3 bg-gray-800 border-t-4 border-white">
         <div 
-          className="h-full bg-white transition-all duration-300"
+          className="h-full bg-red-500 transition-all duration-300 border-r-4 border-black"
           style={{ width: isActive ? '100%' : '0%' }}
         ></div>
       </div>
@@ -156,68 +159,123 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
 const VideoFeed = ({ onContactClick }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
   const containerRef = useRef(null);
-  const scrollTimeoutRef = useRef(null);
+  const navigate = useNavigate();
+
+  // Handle touch events for swipe navigation
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isUpSwipe = distance > 50;
+    const isDownSwipe = distance < -50;
+
+    if (isUpSwipe && currentVideoIndex < videoFeedData.length - 1) {
+      navigateToVideo(currentVideoIndex + 1);
+    }
+    if (isDownSwipe && currentVideoIndex > 0) {
+      navigateToVideo(currentVideoIndex - 1);
+    }
+  };
+
+  // Swipe right to go back to main page
+  const onTouchStartHorizontal = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMoveHorizontal = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEndHorizontal = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isRightSwipe = distance < -50;
+
+    if (isRightSwipe) {
+      navigate('/');
+    }
+  };
+
+  const navigateToVideo = (index) => {
+    if (isScrolling) return;
+    
+    setIsScrolling(true);
+    setCurrentVideoIndex(index);
+    
+    const container = containerRef.current;
+    if (container) {
+      container.scrollTo({
+        top: index * window.innerHeight,
+        behavior: 'smooth'
+      });
+    }
+    
+    setTimeout(() => setIsScrolling(false), 800);
+  };
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    let scrollTimeout;
-    const handleScroll = (e) => {
+    const handleWheel = (e) => {
       e.preventDefault();
       
       if (isScrolling) return;
       
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        const direction = e.deltaY > 0 ? 1 : -1;
-        const newIndex = Math.max(0, Math.min(videoFeedData.length - 1, currentVideoIndex + direction));
-        
-        if (newIndex !== currentVideoIndex) {
-          setIsScrolling(true);
-          setCurrentVideoIndex(newIndex);
-          
-          container.scrollTo({
-            top: newIndex * window.innerHeight,
-            behavior: 'smooth'
-          });
-          
-          setTimeout(() => setIsScrolling(false), 800);
-        }
-      }, 50);
-    };
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        const direction = e.key === 'ArrowDown' ? 1 : -1;
-        const newIndex = Math.max(0, Math.min(videoFeedData.length - 1, currentVideoIndex + direction));
-        
-        if (newIndex !== currentVideoIndex) {
-          setCurrentVideoIndex(newIndex);
-          container.scrollTo({
-            top: newIndex * window.innerHeight,
-            behavior: 'smooth'
-          });
-        }
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const newIndex = Math.max(0, Math.min(videoFeedData.length - 1, currentVideoIndex + direction));
+      
+      if (newIndex !== currentVideoIndex) {
+        navigateToVideo(newIndex);
       }
     };
 
-    container.addEventListener('wheel', handleScroll, { passive: false });
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowUp' && currentVideoIndex > 0) {
+        navigateToVideo(currentVideoIndex - 1);
+      } else if (e.key === 'ArrowDown' && currentVideoIndex < videoFeedData.length - 1) {
+        navigateToVideo(currentVideoIndex + 1);
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      container.removeEventListener('wheel', handleScroll);
+      container.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKeyDown);
-      clearTimeout(scrollTimeout);
     };
   }, [currentVideoIndex, isScrolling]);
 
   return (
     <div 
       ref={containerRef}
-      className="h-screen overflow-hidden"
+      className="h-screen overflow-hidden pb-24"
+      onTouchStart={(e) => {
+        onTouchStart(e);
+        onTouchStartHorizontal(e);
+      }}
+      onTouchMove={(e) => {
+        onTouchMove(e);
+        onTouchMoveHorizontal(e);
+      }}
+      onTouchEnd={(e) => {
+        onTouchEnd();
+        onTouchEndHorizontal();
+      }}
       style={{ scrollSnapType: 'y mandatory' }}
     >
       {videoFeedData.map((video, index) => (
@@ -229,6 +287,36 @@ const VideoFeed = ({ onContactClick }) => {
           />
         </div>
       ))}
+
+      {/* Navigation Hints - Neobrutalism Style */}
+      <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4">
+        <button
+          onClick={() => currentVideoIndex > 0 && navigateToVideo(currentVideoIndex - 1)}
+          className={`bg-yellow-400 border-4 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
+            currentVideoIndex === 0 ? 'opacity-30' : 'hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1'
+          }`}
+          disabled={currentVideoIndex === 0}
+        >
+          <ChevronUp className="h-6 w-6 text-black" />
+        </button>
+        
+        <button
+          onClick={() => currentVideoIndex < videoFeedData.length - 1 && navigateToVideo(currentVideoIndex + 1)}
+          className={`bg-yellow-400 border-4 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
+            currentVideoIndex === videoFeedData.length - 1 ? 'opacity-30' : 'hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:transform hover:-translate-x-1 hover:-translate-y-1'
+          }`}
+          disabled={currentVideoIndex === videoFeedData.length - 1}
+        >
+          <ChevronDown className="h-6 w-6 text-black" />
+        </button>
+      </div>
+
+      {/* Video Counter */}
+      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-20">
+        <div className="bg-red-500 text-white px-4 py-2 border-4 border-white font-black text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-90">
+          {currentVideoIndex + 1}/{videoFeedData.length}
+        </div>
+      </div>
     </div>
   );
 };

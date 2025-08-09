@@ -4,7 +4,7 @@ import "./App.css";
 import MainPage from "./components/MainPage";
 import VideoFeed from "./components/VideoFeed";
 import ContactModal from "./components/ContactModal";
-import FloatingNav from "./components/FloatingNav";
+import BottomNav from "./components/BottomNav";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
@@ -27,13 +27,8 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
-      <div className="bg-white dark:bg-black text-black dark:text-white min-h-screen transition-colors duration-300">
+      <div className="bg-yellow-300 dark:bg-black text-black dark:text-white min-h-screen transition-colors duration-300 font-sans">
         <BrowserRouter>
-          <FloatingNav 
-            darkMode={darkMode} 
-            setDarkMode={setDarkMode}
-            onContactClick={() => setContactOpen(true)}
-          />
           <Routes>
             <Route 
               path="/" 
@@ -48,6 +43,11 @@ function App() {
               } 
             />
           </Routes>
+          <BottomNav 
+            darkMode={darkMode} 
+            setDarkMode={setDarkMode}
+            onContactClick={() => setContactOpen(true)}
+          />
           <ContactModal 
             isOpen={contactOpen}
             onClose={() => setContactOpen(false)}
