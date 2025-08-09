@@ -216,7 +216,7 @@ const VideoFeed = ({ onContactClick }) => {
 
     return () => {
       if (container) {
-        container.removeEventSource('wheel', handleWheel);
+        container.removeEventListener('wheel', handleWheel);
       }
     };
   }, [currentVideoIndex, isScrolling]);
