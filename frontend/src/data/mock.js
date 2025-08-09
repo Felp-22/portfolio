@@ -1,22 +1,35 @@
-// Revolutionary TikTok-style video feed data
+// SIMPLE VIDEO CUSTOMIZATION GUIDE
+// ====================================
+// 
+// To add your own social media videos:
+// 1. Replace the thumbnail URLs with screenshots of your videos
+// 2. Update video titles and descriptions 
+// 3. Change client names to your actual clients
+// 4. For social media videos, you can use:
+//    - Instagram video URLs
+//    - TikTok video URLs  
+//    - YouTube video URLs
+//    - Direct MP4 file links
+//
+// Example of how to customize each video:
 
 export const videoFeedData = [
   {
     id: 1,
-    title: "TechStart's App Launch Story",
-    category: "Corporate",
-    description: "From idea to launch - capturing the journey of a startup that's changing productivity forever.",
-    thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=600&fit=crop&auto=format",
-    videoUrl: "https://sample-videos.com/zip/10/mp4/720/",
-    client: "TechStart Inc.",
-    duration: "2:30",
-    year: "2024",
-    views: "12.5K",
-    engagement: "98%"
+    title: "TechStart's App Launch Story", // CHANGE THIS: Your video title
+    category: "Corporate", // CHANGE THIS: Corporate, Commercial, Social Media, Real Estate, Fashion
+    description: "From idea to launch - capturing the journey of a startup that's changing productivity forever.", // CHANGE THIS: Your video description
+    thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=600&fit=crop&auto=format", // CHANGE THIS: Screenshot of your video
+    videoUrl: "https://sample-videos.com/zip/10/mp4/720/", // CHANGE THIS: Your social media video URL or file
+    client: "TechStart Inc.", // CHANGE THIS: Your client name
+    duration: "2:30", // CHANGE THIS: Video duration
+    year: "2024", // CHANGE THIS: Year created
+    views: "12.5K", // CHANGE THIS: View count (optional)
+    engagement: "98%" // CHANGE THIS: Engagement rate (optional)
   },
   {
     id: 2,
-    title: "Artisan Bread, Endless Passion",
+    title: "Artisan Bread, Endless Passion", 
     category: "Commercial", 
     description: "The smell, the texture, the love. A bakery's story told through the hands that craft it daily.",
     thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b7d4?w=400&h=600&fit=crop&auto=format",
@@ -107,14 +120,44 @@ export const videoFeedData = [
   }
 ];
 
+// ====================================
+// CONTACT INFORMATION
+// ====================================
+// Update this with your actual contact info:
+
 export const contactInfo = {
-  email: "hello@felp.video",
-  phone: "+1 (555) 123-4567",
-  location: "Los Angeles, CA",
+  email: "hello@felp.video", // CHANGE THIS: Your email
+  phone: "+1 (555) 123-4567", // CHANGE THIS: Your phone
+  location: "Los Angeles, CA", // CHANGE THIS: Your location
   socialLinks: [
-    { platform: "Instagram", url: "https://instagram.com/felp.video", handle: "@felp.video" },
-    { platform: "TikTok", url: "https://tiktok.com/@felp.video", handle: "@felp.video" },
-    { platform: "YouTube", url: "https://youtube.com/felp", handle: "Felp Video" },
-    { platform: "LinkedIn", url: "https://linkedin.com/in/felp", handle: "Felp" }
+    { platform: "Instagram", url: "https://instagram.com/felp.video", handle: "@felp.video" }, // CHANGE THIS
+    { platform: "TikTok", url: "https://tiktok.com/@felp.video", handle: "@felp.video" }, // CHANGE THIS
+    { platform: "YouTube", url: "https://youtube.com/felp", handle: "Felp Video" }, // CHANGE THIS
+    { platform: "LinkedIn", url: "https://linkedin.com/in/felp", handle: "Felp" } // CHANGE THIS
   ]
 };
+
+// ====================================
+// HOW TO ADD SOCIAL MEDIA VIDEOS:
+// ====================================
+//
+// INSTAGRAM: 
+// - Right-click on Instagram video → "Copy video address"
+// - Use that URL in videoUrl field
+//
+// TIKTOK:
+// - Use TikTok video URL directly
+// - Or download and upload to your server
+//
+// YOUTUBE:
+// - Use YouTube video URL
+// - For better performance, use YouTube embed URLs
+//
+// CUSTOM VIDEOS:
+// - Upload your MP4 files to a folder like /public/videos/
+// - Use relative paths like "/videos/my-video.mp4"
+//
+// THUMBNAILS:
+// - Take screenshots of your videos
+// - Upload to image hosting service (Cloudinary, AWS S3, etc.)
+// - Or use relative paths like "/images/thumbnail1.jpg"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import MainPage from "./components/MainPage";
 import VideoFeed from "./components/VideoFeed";
 import ContactModal from "./components/ContactModal";
 import FloatingNav from "./components/FloatingNav";
@@ -36,6 +37,10 @@ function App() {
           <Routes>
             <Route 
               path="/" 
+              element={<MainPage />} 
+            />
+            <Route 
+              path="/videos" 
               element={
                 <VideoFeed 
                   onContactClick={handleContactOpen}
