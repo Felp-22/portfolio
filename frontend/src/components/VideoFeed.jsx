@@ -7,28 +7,24 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
-  const [controlsTimer, setControlsTimer] = useState(null);
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive && videoRef.current) {
       setIsPlaying(true);
-      // Auto-play when active
-      const timer = setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.play().catch(() => {
-            setIsPlaying(false);
-          });
-        }
-      }, 100);
-      return () => clearTimeout(timer);
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {
+        console.log("Auto-play failed for video:", video.title);
+        setIsPlaying(false);
+      });
     } else if (videoRef.current) {
       setIsPlaying(false);
       videoRef.current.pause();
     }
   }, [isActive]);
 
-  const togglePlay = () => {
+  const togglePlay = (e) => {
+    e.stopPropagation();
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -40,76 +36,57 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
     }
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e) => {
+    e.stopPropagation();
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
   };
 
-  const showControlsTemporarily = () => {
-    setShowControls(true);
-    if (controlsTimer) clearTimeout(controlsTimer);
-    const timer = setTimeout(() => setShowControls(false), 3000);
-    setControlsTimer(timer);
-  };
-
   return (
     <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden">
-      {/* Auto-playing Video (No Thumbnail) */}
+      {/* Auto-playing Video - NO THUMBNAIL/POSTER */}
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         muted={isMuted}
         loop
         playsInline
-        autoPlay={isActive}
-        poster={video.thumbnail}
+        preload="auto"
+        onLoadedData={() => {
+          if (isActive && videoRef.current) {
+            videoRef.current.play().catch(() => {
+              setIsPlaying(false);
+            });
+          }
+        }}
       >
         <source src={video.videoUrl} type="video/mp4" />
       </video>
 
       {/* Minimal UI Overlays */}
-      <div 
-        className="absolute inset-0 flex flex-col justify-between p-3 z-10 pb-28"
-        onTouchStart={(e) => {
-          e.stopPropagation();
-          showControlsTemporarily();
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          togglePlay();
-          showControlsTemporarily();
-        }}
-      >
-        {/* Top Section - Minimal Category & Sound */}
-        <div className="flex justify-between items-start">
+      <div className="absolute inset-0 flex flex-col justify-between p-3 z-10 pb-28 pointer-events-none">
+        {/* Top Section */}
+        <div className="flex justify-between items-start pointer-events-none">
           <div className="bg-blue-600 text-white px-2 py-1 text-xs font-bold uppercase border-2 border-white">
             {video.category}
           </div>
           
-          {/* Sound Control - Show when tapped */}
-          {showControls && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMute();
-              }}
-              className="bg-black/60 text-white p-2 border-2 border-white/50 backdrop-blur-sm"
-            >
-              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-            </button>
-          )}
+          {/* Sound Control */}
+          <button
+            onClick={toggleMute}
+            className="bg-black/60 text-white p-2 border-2 border-white/50 backdrop-blur-sm pointer-events-auto"
+          >
+            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+          </button>
         </div>
 
         {/* Center Play Button - Only when paused */}
         {!isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePlay();
-              }}
+              onClick={togglePlay}
               className="bg-white/20 backdrop-blur-sm text-white p-6 border-2 border-white/50 rounded-full hover:bg-white/30 transition-all"
             >
               <Play className="h-8 w-8 ml-1" />
@@ -117,8 +94,8 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
           </div>
         )}
 
-        {/* Bottom Section - Minimal Info */}
-        <div className="space-y-2">
+        {/* Bottom Section */}
+        <div className="space-y-2 pointer-events-none">
           {/* Compact Info */}
           <div className="flex items-center gap-2 text-sm">
             <span className="bg-yellow-400 text-black px-2 py-1 text-xs font-bold border border-black">
@@ -129,7 +106,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             </span>
           </div>
           
-          {/* Title - Minimal */}
+          {/* Title */}
           <div className="bg-white/90 backdrop-blur-sm text-black p-3 border-2 border-black max-w-xs">
             <h3 className="font-bold text-sm leading-tight mb-1">
               {video.title}
@@ -139,13 +116,13 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             </p>
           </div>
 
-          {/* Contact CTA - Smaller */}
+          {/* Contact CTA */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onContactClick(video);
             }}
-            className="bg-purple-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all"
+            className="bg-purple-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all pointer-events-auto"
           >
             <MessageCircle className="h-4 w-4" />
             <span>WORK WITH ME</span>
@@ -153,7 +130,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         </div>
       </div>
 
-      {/* Minimal Progress Bar */}
+      {/* Progress Bar */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
         <div 
           className="h-full bg-blue-600 transition-all duration-300"
@@ -167,149 +144,139 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
 const VideoFeed = ({ onContactClick }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  
+  // Touch handling state
+  const [touchStartY, setTouchStartY] = useState(null);
+  const [touchStartX, setTouchStartX] = useState(null);
 
   const navigateToVideo = (index) => {
-    if (isScrolling) return;
+    if (isScrolling || index < 0 || index >= videoFeedData.length) return;
     
     setIsScrolling(true);
     setCurrentVideoIndex(index);
     
-    const container = containerRef.current;
-    if (container) {
-      container.scrollTo({
-        top: index * window.innerHeight,
-        behavior: 'smooth'
-      });
-    }
-    
     setTimeout(() => setIsScrolling(false), 800);
   };
 
-  // Handle vertical touch events for video navigation
+  // Handle touch events
   const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientY);
+    const touch = e.touches[0];
+    setTouchStartY(touch.clientY);
+    setTouchStartX(touch.clientX);
   };
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientY);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+  const handleTouchEnd = (e) => {
+    if (!touchStartY || !touchStartX) return;
     
-    const distance = touchStart - touchEnd;
+    const touch = e.changedTouches[0];
+    const touchEndY = touch.clientY;
+    const touchEndX = touch.clientX;
+    
+    const diffY = touchStartY - touchEndY;
+    const diffX = touchStartX - touchEndX;
+    
     const minSwipeDistance = 50;
     
-    const isUpSwipe = distance > minSwipeDistance;
-    const isDownSwipe = distance < -minSwipeDistance;
-
-    if (isUpSwipe && currentVideoIndex < videoFeedData.length - 1) {
-      navigateToVideo(currentVideoIndex + 1);
+    // Vertical swipe for video navigation
+    if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > minSwipeDistance) {
+      if (diffY > 0) {
+        // Swiped up - next video
+        navigateToVideo(currentVideoIndex + 1);
+      } else {
+        // Swiped down - previous video
+        navigateToVideo(currentVideoIndex - 1);
+      }
     }
-    if (isDownSwipe && currentVideoIndex > 0) {
-      navigateToVideo(currentVideoIndex - 1);
-    }
-  };
-
-  // Handle horizontal swipe to go back to main page
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
-
-  const handleHorizontalTouchStart = (e) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleHorizontalTouchMove = (e) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleHorizontalTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
     
-    const distance = touchStartX - touchEndX;
-    const isRightSwipe = distance < -100; // Increased threshold for horizontal
-
-    if (isRightSwipe) {
+    // Horizontal swipe to go back to main page
+    if (Math.abs(diffX) > Math.abs(diffY) && diffX < -100) {
       navigate('/');
     }
+    
+    setTouchStartY(null);
+    setTouchStartX(null);
   };
 
+  // Mouse wheel support
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     const handleWheel = (e) => {
       e.preventDefault();
       
       if (isScrolling) return;
       
       const direction = e.deltaY > 0 ? 1 : -1;
-      const newIndex = Math.max(0, Math.min(videoFeedData.length - 1, currentVideoIndex + direction));
+      const newIndex = currentVideoIndex + direction;
       
-      if (newIndex !== currentVideoIndex) {
-        navigateToVideo(newIndex);
-      }
+      navigateToVideo(newIndex);
     };
 
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [currentVideoIndex, isScrolling]);
+
+  // Keyboard support
+  useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'ArrowUp' && currentVideoIndex > 0) {
+      if (e.key === 'ArrowUp') {
         navigateToVideo(currentVideoIndex - 1);
-      } else if (e.key === 'ArrowDown' && currentVideoIndex < videoFeedData.length - 1) {
+      } else if (e.key === 'ArrowDown') {
         navigateToVideo(currentVideoIndex + 1);
       }
     };
 
-    container.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      container.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [currentVideoIndex, isScrolling]);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentVideoIndex]);
 
   return (
     <div 
       ref={containerRef}
-      className="h-screen overflow-hidden pb-16"
-      onTouchStart={(e) => {
-        handleTouchStart(e);
-        handleHorizontalTouchStart(e);
-      }}
-      onTouchMove={(e) => {
-        handleTouchMove(e);
-        handleHorizontalTouchMove(e);
-      }}
-      onTouchEnd={(e) => {
-        handleTouchEnd();
-        handleHorizontalTouchEnd();
-      }}
+      className="h-screen overflow-hidden pb-16 relative"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{ 
-        scrollSnapType: 'y mandatory',
-        touchAction: 'pan-y' // Enable vertical panning
+        touchAction: 'none', // Disable default touch behaviors
+        userSelect: 'none'
       }}
     >
-      {videoFeedData.map((video, index) => (
-        <div key={video.id} style={{ scrollSnapAlign: 'start' }}>
+      {/* Video Container */}
+      <div 
+        className="h-full w-full"
+        style={{
+          transform: `translateY(-${currentVideoIndex * 100}vh)`,
+          transition: isScrolling ? 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none'
+        }}
+      >
+        {videoFeedData.map((video, index) => (
           <VideoCard
+            key={video.id}
             video={video}
             isActive={index === currentVideoIndex}
             onContactClick={onContactClick}
           />
-        </div>
-      ))}
+        ))}
+      </div>
 
-      {/* Minimal Video Counter - Top Right */}
+      {/* Video Counter */}
       <div className="fixed right-3 top-6 z-20">
         <div className="bg-black/60 backdrop-blur-sm text-white px-2 py-1 text-xs font-bold border border-white/30">
           {currentVideoIndex + 1}/{videoFeedData.length}
         </div>
+      </div>
+
+      {/* Debug info for development */}
+      <div className="fixed left-3 top-6 z-20 bg-red-500 text-white px-2 py-1 text-xs font-bold">
+        Current: {currentVideoIndex}
       </div>
     </div>
   );
