@@ -100,14 +100,14 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         )}
 
         {/* Bottom Left Section - Video Info (Moved Up) */}
-        <div className="absolute bottom-32 left-3 space-y-3 pointer-events-none max-w-xs">
+        <div className="absolute bottom-32 left-3 space-y-3 pointer-events-none max-w-[calc(100vw-120px)]">
           {/* Client Name */}
           <div className="text-white/90 text-base font-bold drop-shadow-lg">
             {video.client}
           </div>
           
           {/* Title & Description */}
-          <div className="bg-white/95 backdrop-blur-sm text-black p-4 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)]">
+          <div className="bg-white/95 backdrop-blur-sm text-black p-4 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] max-w-[280px]">
             <h3 className="font-bold text-base leading-tight mb-2">
               {video.title}
             </h3>
@@ -118,7 +118,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         </div>
 
         {/* Right Side Action Button - TikTok Style */}
-        <div className="absolute bottom-32 right-3 pointer-events-auto">
+        <div className="absolute bottom-32 right-4 pointer-events-auto">
           <button
             onClick={handleWhatsAppContact}
             className="bg-green-600 text-white p-4 rounded-full border-3 border-white font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:scale-105 transition-all"
