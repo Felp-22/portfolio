@@ -118,7 +118,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
         </div>
 
         {/* Right Side Action Button - Aligned with Client Name */}
-        <div className="absolute bottom-44 right-4 pointer-events-auto">
+        <div className="absolute bottom-56 right-8 pointer-events-auto">
           <button
             onClick={handleWhatsAppContact}
             className="bg-green-600 text-white p-4 rounded-full border-3 border-white font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:scale-105 transition-all"
@@ -126,7 +126,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             <MessageCircle className="h-6 w-6" />
           </button>
           <div className="text-white text-xs font-bold text-center mt-2 drop-shadow-lg">
-            WORK WITH ME
+            CONTATO
           </div>
         </div>
       </div>

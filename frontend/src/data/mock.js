@@ -6,35 +6,35 @@
 export const videoFeedData = [
   {
     id: 1,
-    title: "Creative Brand Story", 
+    title: "VIDEO PARA BARBEÁRIA", 
     category: "Reel",
-    description: "Innovative storytelling that captures brand essence and connects with audiences on an emotional level.",
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    client: "Creative Agency"
+    description: "Video feito para apresentar a babearia e localização..",
+    videoUrl: "https://res.cloudinary.com/dku137ezv/video/upload/v1754760318/video_loc_paulo_2_smxfol.mov",
+    client: "Paulo Áylla"
   },
   {
     id: 2,
-    title: "Dynamic Product Showcase", 
+    title: "VIDEO PARA BARBEÁRIA", 
     category: "Reel",
-    description: "High-energy commercial content that showcases products in action and drives engagement.",
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    client: "Product Brand"
+    description: "Video meme feito pra atrair e engajar o publico..",
+    videoUrl: "https://res.cloudinary.com/dku137ezv/video/upload/v1754756458/video_meme_paulo_wqc9rl.mov",
+    client: "Paulo Áylla"
   },
   {
     id: 3,
-    title: "Social Media Viral Content",
+    title: "VIDEO PARA BARBEÁRIA",
     category: "Reel",
-    description: "Trendy, shareable content designed to maximize reach and create viral moments on social platforms.",
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    client: "Social Brand"
+    description: "Video mostrando o processo e resultado do corte.",
+    videoUrl: "https://res.cloudinary.com/dku137ezv/video/upload/v1754760674/video_paulo_3_dxjvhw.mov",
+    client: "Paulo Áylla"
   },
   {
     id: 4,
-    title: "Business Growth Story",
+    title: "VIDEO PARA BARBEÁRIA",
     category: "Reel",
-    description: "Professional corporate content that highlights business achievements and growth milestones.",
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    client: "Business Client"
+    description: "Video mostrando o processo e resultado do corte.",
+    videoUrl: "https://res.cloudinary.com/dku137ezv/video/upload/v1754760344/paulo_video_v2_z9zhwj.mp4",
+    client: "Paulo Áylla"
   }
 ];
 

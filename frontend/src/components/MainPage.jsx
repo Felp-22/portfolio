@@ -108,12 +108,12 @@ const MainPage = () => {
         }`}>
           <div className="bg-blue-600 text-white px-4 py-2 border-3 border-black dark:border-white transform -rotate-1 inline-block mb-4 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]">
             <p className="text-sm md:text-lg font-black uppercase tracking-wide">
-              VIDEO CREATOR
+              VIDEOMAKER
             </p>
           </div>
           
           <p className="text-sm md:text-lg font-bold text-black dark:text-white max-w-xl mx-auto">
-            CRAFTING VIRAL CONTENT FOR SMALL BUSINESSES
+            CRIO CONTEÚDO PARA A SUA EMPRESA.
           </p>
         </div>
 
@@ -123,20 +123,20 @@ const MainPage = () => {
         }`}>
           <div className="bg-red-500 border-3 border-black dark:border-white p-3 transform rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
             <Eye className="h-5 w-5 text-white mx-auto mb-1" />
-            <div className="text-lg font-black text-white">150K</div>
+            <div className="text-lg font-black text-white">200M</div>
             <div className="text-white font-bold text-xs uppercase">VIEWS</div>
           </div>
           
           <div className="bg-green-500 border-3 border-black dark:border-white p-3 transform -rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
             <Users className="h-5 w-5 text-white mx-auto mb-1" />
-            <div className="text-lg font-black text-white">25+</div>
-            <div className="text-white font-bold text-xs uppercase">CLIENTS</div>
+            <div className="text-lg font-black text-white">3 anos</div>
+            <div className="text-white font-bold text-xs uppercase">EXPERIÊNCIA</div>
           </div>
           
           <div className="bg-purple-500 border-3 border-black dark:border-white p-3 transform rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:transform hover:rotate-0 transition-transform">
             <Zap className="h-5 w-5 text-white mx-auto mb-1" />
-            <div className="text-lg font-black text-white">96%</div>
-            <div className="text-white font-bold text-xs uppercase">VIRAL</div>
+            <div className="text-lg font-black text-white">100%</div>
+            <div className="text-white font-bold text-xs uppercase">QUALIDADE</div>
           </div>
         </div>
 
@@ -150,7 +150,7 @@ const MainPage = () => {
           >
             <div className="flex items-center gap-3">
               <Play className="h-5 w-5 group-active:scale-110 transition-transform" />
-              <span>WATCH VIDEOS</span>
+              <span>ASSISTA AOS VIDEOS</span>
               <ArrowRight className="h-5 w-5 group-active:translate-x-1 transition-transform" />
             </div>
           </button>
@@ -162,7 +162,7 @@ const MainPage = () => {
         }`}>
           <div className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 border-2 border-black dark:border-white inline-flex items-center gap-2 font-bold uppercase text-xs">
             <ChevronLeft className="h-3 w-3" />
-            <span>SWIPE LEFT FOR VIDEOS</span>
+            <span>DESLIZE PARA A ESQUERDA</span>
             <ChevronRight className="h-3 w-3" />
           </div>
         </div>
