@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Play, ArrowRight, Eye, Users, Zap, ChevronLeft, ChevronRight } from "lucide-react";
+import { Play, ArrowRight, Eye, Users, Zap, ChevronLeft, ChevronRight, Sun, Moon, Mail } from "lucide-react";
 
 const MainPage = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ const MainPage = () => {
     const timer = setTimeout(() => setIsVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   // Handle touch events for swipe navigation
   const onTouchStart = (e) => {
@@ -39,14 +48,36 @@ const MainPage = () => {
     navigate('/videos');
   };
 
+  const handleWhatsAppContact = () => {
+    const whatsappUrl = "https://wa.me/5598991260902?text=Ol%C3%A1.%20Vim%20pelo%20seu%20web-portfolio%2C%20gostaria%20de%20trabalhar%20com%20voc%C3%AA.%20";
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <div 
       ref={pageRef}
-      className="min-h-screen bg-yellow-300 dark:bg-black relative overflow-hidden pb-20"
+      className="min-h-screen bg-yellow-300 dark:bg-black relative overflow-hidden"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
+      {/* Floating Controls - Top Right */}
+      <div className="fixed top-6 right-6 z-50 flex gap-3">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="bg-yellow-400 dark:bg-gray-800 text-black dark:text-white p-2 border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:active:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+        >
+          {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
+        
+        <button
+          onClick={handleWhatsAppContact}
+          className="bg-green-600 text-white p-2 border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:active:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+        >
+          <Mail className="h-4 w-4" />
+        </button>
+      </div>
+
       {/* Neobrutalism Background Elements - Smaller */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-8 w-16 h-16 bg-blue-600 transform rotate-12 border-3 border-black dark:border-white opacity-60"></div>
@@ -135,19 +166,6 @@ const MainPage = () => {
             <ChevronRight className="h-3 w-3" />
           </div>
         </div>
-      </div>
-
-      {/* Mobile CTA - Fixed Position - Smaller */}
-      <div className="md:hidden fixed bottom-20 left-3 right-3 z-20">
-        <button
-          onClick={handleEnterVideos}
-          className="w-full bg-red-500 text-white py-3 border-3 border-black text-lg font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-        >
-          <div className="flex items-center justify-center gap-2">
-            <Play className="h-5 w-5" />
-            WATCH NOW
-          </div>
-        </button>
       </div>
     </div>
   );

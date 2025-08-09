@@ -6,7 +6,6 @@ import { videoFeedData } from "../data/mock";
 const VideoCard = ({ video, isActive, onContactClick }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [showControls, setShowControls] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -44,6 +43,12 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
     }
   };
 
+  const handleWhatsAppContact = (e) => {
+    e.stopPropagation();
+    const whatsappUrl = "https://wa.me/5598991260902?text=Ol%C3%A1.%20Vim%20pelo%20seu%20web-portfolio%2C%20gostaria%20de%20trabalhar%20com%20voc%C3%AA.%20";
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <div className="relative w-full h-screen flex-shrink-0 bg-black overflow-hidden">
       {/* Auto-playing Video - NO THUMBNAIL/POSTER */}
@@ -66,7 +71,7 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
       </video>
 
       {/* Minimal UI Overlays */}
-      <div className="absolute inset-0 flex flex-col justify-between p-3 z-10 pb-28 pointer-events-none">
+      <div className="absolute inset-0 flex flex-col justify-between p-3 z-10 pointer-events-none">
         {/* Top Section */}
         <div className="flex justify-between items-start pointer-events-none">
           <div className="bg-blue-600 text-white px-2 py-1 text-xs font-bold uppercase border-2 border-white">
@@ -111,13 +116,10 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
             </p>
           </div>
 
-          {/* Contact CTA */}
+          {/* WhatsApp Contact CTA */}
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onContactClick(video);
-            }}
-            className="bg-purple-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all pointer-events-auto"
+            onClick={handleWhatsAppContact}
+            className="bg-green-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all pointer-events-auto"
           >
             <MessageCircle className="h-4 w-4" />
             <span>WORK WITH ME</span>
@@ -214,7 +216,7 @@ const VideoFeed = ({ onContactClick }) => {
 
     return () => {
       if (container) {
-        container.removeEventListener('wheel', handleWheel);
+        container.removeEventSource('wheel', handleWheel);
       }
     };
   }, [currentVideoIndex, isScrolling]);
@@ -236,11 +238,11 @@ const VideoFeed = ({ onContactClick }) => {
   return (
     <div 
       ref={containerRef}
-      className="h-screen overflow-hidden pb-16 relative"
+      className="h-screen overflow-hidden relative"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       style={{ 
-        touchAction: 'none', // Disable default touch behaviors
+        touchAction: 'none',
         userSelect: 'none'
       }}
     >

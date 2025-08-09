@@ -4,7 +4,6 @@ import "./App.css";
 import MainPage from "./components/MainPage";
 import VideoFeed from "./components/VideoFeed";
 import ContactModal from "./components/ContactModal";
-import BottomNav from "./components/BottomNav";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
@@ -43,11 +42,6 @@ function App() {
               } 
             />
           </Routes>
-          <BottomNav 
-            darkMode={darkMode} 
-            setDarkMode={setDarkMode}
-            onContactClick={() => setContactOpen(true)}
-          />
           <ContactModal 
             isOpen={contactOpen}
             onClose={() => setContactOpen(false)}
