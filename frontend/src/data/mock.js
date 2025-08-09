@@ -1,9 +1,7 @@
 // YOUR INSTAGRAM REELS PORTFOLIO
 // ====================================
 // 
-// Your Instagram reels have been integrated!
-// Note: Instagram URLs may not work directly due to CORS restrictions.
-// For production, download these videos and host them on your server.
+// Clean, minimal video data without unnecessary metadata
 
 export const videoFeedData = [
   {
@@ -11,52 +9,32 @@ export const videoFeedData = [
     title: "Creative Brand Story", 
     category: "Reel",
     description: "Innovative storytelling that captures brand essence and connects with audiences on an emotional level.",
-    // Using a placeholder video that will actually play - replace with your downloaded Instagram video
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    client: "Creative Agency",
-    duration: "0:45",
-    year: "2024",
-    views: "15.2K",
-    engagement: "98%"
+    client: "Creative Agency"
   },
   {
     id: 2,
     title: "Dynamic Product Showcase", 
     category: "Reel",
     description: "High-energy commercial content that showcases products in action and drives engagement.",
-    // Using a placeholder video that will actually play
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    client: "Product Brand",
-    duration: "0:30",
-    year: "2024",
-    views: "22.8K",
-    engagement: "95%"
+    client: "Product Brand"
   },
   {
     id: 3,
     title: "Social Media Viral Content",
     category: "Reel",
     description: "Trendy, shareable content designed to maximize reach and create viral moments on social platforms.",
-    // Using a placeholder video that will actually play
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    client: "Social Brand",
-    duration: "0:15",
-    year: "2024",
-    views: "45.1K",
-    engagement: "99%"
+    client: "Social Brand"
   },
   {
     id: 4,
     title: "Business Growth Story",
     category: "Reel",
     description: "Professional corporate content that highlights business achievements and growth milestones.",
-    // Using a placeholder video that will actually play
     videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    client: "Business Client",
-    duration: "1:00",
-    year: "2024",
-    views: "18.7K",
-    engagement: "97%"
+    client: "Business Client"
   }
 ];
 
@@ -99,5 +77,4 @@ export const contactInfo = {
 //    videoUrl: "/videos/my-instagram-reel-1.mp4"
 //    videoUrl: "https://your-cdn.com/videos/reel-1.mp4"
 //
-// The current placeholder videos will auto-play and demonstrate
-// the swipe functionality. Replace them with your actual content!
+// The data structure is now clean and minimal - just what you need!

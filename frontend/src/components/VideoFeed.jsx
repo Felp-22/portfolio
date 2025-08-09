@@ -94,16 +94,11 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
           </div>
         )}
 
-        {/* Bottom Section */}
+        {/* Bottom Section - Clean Info */}
         <div className="space-y-2 pointer-events-none">
-          {/* Compact Info */}
-          <div className="flex items-center gap-2 text-sm">
-            <span className="bg-yellow-400 text-black px-2 py-1 text-xs font-bold border border-black">
-              {video.duration}
-            </span>
-            <span className="text-white/80 text-xs font-bold">
-              {video.client} • {video.year}
-            </span>
+          {/* Client Name Only */}
+          <div className="text-white/80 text-sm font-bold">
+            {video.client}
           </div>
           
           {/* Title */}
@@ -265,18 +260,6 @@ const VideoFeed = ({ onContactClick }) => {
             onContactClick={onContactClick}
           />
         ))}
-      </div>
-
-      {/* Video Counter */}
-      <div className="fixed right-3 top-6 z-20">
-        <div className="bg-black/60 backdrop-blur-sm text-white px-2 py-1 text-xs font-bold border border-white/30">
-          {currentVideoIndex + 1}/{videoFeedData.length}
-        </div>
-      </div>
-
-      {/* Debug info for development */}
-      <div className="fixed left-3 top-6 z-20 bg-red-500 text-white px-2 py-1 text-xs font-bold">
-        Current: {currentVideoIndex}
       </div>
     </div>
   );
