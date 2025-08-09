@@ -99,31 +99,35 @@ const VideoCard = ({ video, isActive, onContactClick }) => {
           </div>
         )}
 
-        {/* Bottom Section - Clean Info */}
-        <div className="space-y-2 pointer-events-none">
-          {/* Client Name Only */}
-          <div className="text-white/80 text-sm font-bold">
+        {/* Bottom Left Section - Video Info (Moved Up) */}
+        <div className="absolute bottom-32 left-3 space-y-3 pointer-events-none max-w-xs">
+          {/* Client Name */}
+          <div className="text-white/90 text-base font-bold drop-shadow-lg">
             {video.client}
           </div>
           
-          {/* Title */}
-          <div className="bg-white/90 backdrop-blur-sm text-black p-3 border-2 border-black max-w-xs">
-            <h3 className="font-bold text-sm leading-tight mb-1">
+          {/* Title & Description */}
+          <div className="bg-white/95 backdrop-blur-sm text-black p-4 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)]">
+            <h3 className="font-bold text-base leading-tight mb-2">
               {video.title}
             </h3>
-            <p className="text-xs text-gray-700">
-              {video.description.substring(0, 60)}...
+            <p className="text-sm text-gray-700 leading-relaxed">
+              {video.description.substring(0, 80)}...
             </p>
           </div>
+        </div>
 
-          {/* WhatsApp Contact CTA */}
+        {/* Right Side Action Button - TikTok Style */}
+        <div className="absolute bottom-32 right-3 pointer-events-auto">
           <button
             onClick={handleWhatsAppContact}
-            className="bg-green-600 text-white px-4 py-2 border-2 border-white font-bold uppercase text-sm flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] transition-all pointer-events-auto"
+            className="bg-green-600 text-white p-4 rounded-full border-3 border-white font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:scale-105 transition-all"
           >
-            <MessageCircle className="h-4 w-4" />
-            <span>WORK WITH ME</span>
+            <MessageCircle className="h-6 w-6" />
           </button>
+          <div className="text-white text-xs font-bold text-center mt-2 drop-shadow-lg">
+            WORK WITH ME
+          </div>
         </div>
       </div>
 
